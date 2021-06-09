@@ -13,14 +13,14 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: 網頁標題
+title: 學習筆記
 #email: your-email@example.com
 description: >- # this means to ignore newlines until "baseurl:"
-  網頁描述
+  學習路上的備忘、想法及練習
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: jekyllrb
-#github_username:  jekyll
+github_username:  HarukaOvO
 
 # Build settings
 markdown: kramdown

@@ -1,0 +1,31 @@
+---
+layout: post
+title:  "使用C++自動釋放Linux檔案描述"
+date:   2021-06-09 20:43:00 +0800
+categories: C++
+---
+在Linux下幾乎所有的資源操作都是透過檔案描述(file descriptor)進行，但在設計時如果不留意，有可能會在使用後忘記釋放檔案描述，當程式執行久了會造成無法再建立新的檔案描述。
+
+一種簡單的方法是利用C++類別來管理檔案描述，如下：
+
+{% highlight cpp %}
+class FileDescriptor {
+  private: int file_descriptor;
+  public: FileDescriptor(): file_descriptor(INT_MIN) {
+  }
+  public: ~FileDescriptor() {
+    if(this->file_descriptor >= 0) {
+      close(this->file_descriptor);
+    }
+  }
+}
+{% endhighlight %}
+
+一般來說檔案描述若取得成功值應為正整數(至少文件、socket、PIPE...等是如此)，我們可以在建構時將其設為負數，並在解構時觀察如果值為正整數時自動釋放它。
+
+這個類別在使用上與一般int型態的檔案描述沒太大差異：
+
+{% highlight cpp %}
+FileDescriptor file;
+file.file_descriptor = open("test", O_RDWR);
+{% endhighlight %}
